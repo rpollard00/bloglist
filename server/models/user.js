@@ -1,31 +1,33 @@
-const mongoose = require("mongoose")
+const mongoose = require('mongoose')
 
 const userSchema = new mongoose.Schema({
-  username: { 
+  username: {
     type: String,
     minLength: 3,
     unique: true, // must be unique
-    required: true
+    required: true,
   },
   name: String,
   passwordHash: {
     type: String,
-    required: true
+    required: true,
   },
-  blogs: [ { // reference to blog Objects
-    type: mongoose.Schema.Types.ObjectId,
-    ref: 'Blog'
-  } ]
-  
+  blogs: [
+    {
+      // reference to blog Objects
+      type: mongoose.Schema.Types.ObjectId,
+      ref: 'Blog',
+    },
+  ],
 })
 
-userSchema.set("toJSON", {
+userSchema.set('toJSON', {
   transform: (document, returnedObject) => {
     returnedObject.id = returnedObject._id.toString()
     delete returnedObject._id
     delete returnedObject.__v
     delete returnedObject.passwordHash // don't put the has in here
-  }
+  },
 })
 
-module.exports = mongoose.model("User", userSchema)
+module.exports = mongoose.model('User', userSchema)

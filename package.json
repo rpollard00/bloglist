@@ -43,10 +43,11 @@
     "dev": "NODE_ENV=development nodemon index.js",
     "start": "NODE_ENV=production node index.js",
     "build": "webpack --mode=production",
-    "test": "react-scripts test",
+    "test": "NODE_ENV=test jest --verbose --runInBand",
     "eject": "react-scripts eject",
     "cypress:open": "cypress open",
-    "test:e2e": "cypress run"
+    "test:e2e": "cypress run",
+    "eslint": "eslint './**/*.{js,jsx}'"
   },
   "engines": {
     "node": ">=16.16"
