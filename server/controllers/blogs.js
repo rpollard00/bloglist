@@ -25,7 +25,7 @@ blogRouter.post('/', async (request, response) => {
   if (!('title' in body) || !('url' in body)) {
     return response
       .status(400)
-      .json({ error: 'Request missing required fields' })
+      .json({ error: 'Request missing required fields.' })
   }
 
   const blog = new Blog({

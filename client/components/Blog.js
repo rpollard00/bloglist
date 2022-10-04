@@ -20,16 +20,14 @@ const Comment = ({ blog }) => {
     try {
       const commentToAdd = await blogService.postComment(comment, blogId)
       //console.log('commentToAdd', commentToAdd)
-      const updatedBlog = { ...blog, comments: [...blog.comments, commentToAdd] || [commentToAdd] }
+      const updatedBlog = {
+        ...blog,
+        comments: [...blog.comments, commentToAdd] || [commentToAdd],
+      }
       console.log('updatedBlog', blog)
       dispatch(updateBlog(updatedBlog))
 
-      dispatch(
-        setNotification(
-          `Comment ${comment.content} added `,
-          5,
-        ),
-      )
+      dispatch(setNotification(`Comment ${comment.content} added... `, 5))
     } catch (exception) {
       dispatch(
         setNotification(
@@ -43,7 +41,7 @@ const Comment = ({ blog }) => {
   const handleSubmit = (event) => {
     event.preventDefault()
     const newComment = {
-      content: comment
+      content: comment,
     }
     //console.log(newComment)
     addComment(newComment)
@@ -52,14 +50,19 @@ const Comment = ({ blog }) => {
 
   return (
     <form onSubmit={handleSubmit}>
-      <input className="input" value={comment} onChange={(event) => setComment(event.target.value)} type="text"></input>
+      <input
+        className="input"
+        value={comment}
+        onChange={(event) => setComment(event.target.value)}
+        type="text"
+      ></input>
       <button className="button">add comment</button>
     </form>
   )
 }
 
 const Blog = ({ blog }) => {
-  const user = useSelector(state => state.user)
+  const user = useSelector((state) => state.user)
 
   const dispatch = useDispatch()
   const style = {
@@ -85,30 +88,40 @@ const Blog = ({ blog }) => {
         </h2>
         <div>
           {blog.likes} likes
-          <button className="button" id="btn-like" onClick={() => {dispatch(likeBlog(blog))}}>
+          <button
+            className="button"
+            id="btn-like"
+            onClick={() => {
+              dispatch(likeBlog(blog))
+            }}
+          >
             like
           </button>
-          {getUserId() === blog.user.id ? <button className="button" id="btn-delete" onClick={() => {
-            dispatch(removeBlog(blog))
-            dispatch(setNotification(`Alert: ${blog.title} deleted.`, 5))
-            navigate('/')
-          }}>
-            delete
-          </button> : null}
+          {getUserId() === blog.user.id ? (
+            <button
+              className="button"
+              id="btn-delete"
+              onClick={() => {
+                dispatch(removeBlog(blog))
+                dispatch(setNotification(`Alert: ${blog.title} deleted.`, 5))
+                navigate('/')
+              }}
+            >
+              delete
+            </button>
+          ) : null}
         </div>
         <a href={`http://${blog.url}`}>{blog.url}</a>
         <div>added by {blog.user.name}</div>
 
         <h3>Comments</h3>
-        <Comment blog={blog}/>
+        <Comment blog={blog} />
         <ul>
-          {
-            blog.comments
-              ? blog.comments.map((c) => {
-                return (<li key={c.id}>{c.content}</li>)
+          {blog.comments
+            ? blog.comments.map((c) => {
+                return <li key={c.id}>{c.content}</li>
               })
-              : null
-          }
+            : null}
         </ul>
       </div>
     </>
