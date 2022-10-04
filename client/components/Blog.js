@@ -119,8 +119,8 @@ const Blog = ({ blog }) => {
         <ul>
           {blog.comments
             ? blog.comments.map((c) => {
-                return <li key={c.id}>{c.content}</li>
-              })
+              return <li key={c.id}>{c.content}</li>
+            })
             : null}
         </ul>
       </div>
